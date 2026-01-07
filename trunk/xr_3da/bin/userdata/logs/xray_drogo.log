@@ -1,0 +1,11 @@
+* Detected CPU: GenuineIntel Pentium-III, F6/M7/S2, 2495.00 mhz, 21-clk 'rdtsc'
+* CPU Features: RDTSC, MMX, SSE, SSE2
+
+Initializing File System...
+using fs-ltx fsgame.ltx
+FS: 305 files cached, 137Kb memory used.
+Init FileSystem 0.004608 sec
+'xrCore' build 9804, Dec 11 2025
+
+CRT heap 0x00a70000
+Process heap 0x00a70000
