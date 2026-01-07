@@ -104,6 +104,18 @@ class ENGINE_API CCameraManager
 	float					fFov;
 	float					fFar;
 	float					fAspect;
+
+	Fmatrix					unaffected_mView;
+	Fvector					unaffected_vPosition;
+	Fvector					unaffected_vDirection;
+	Fvector					unaffected_vNormal;
+	Fvector					unaffected_vRight;
+
+	Fvector					affected_vPosition;
+	Fvector					affected_vDirection;
+	Fvector					affected_vNormal;
+	Fvector					affected_vRight;
+
 	bool					m_bAutoApply;
 	SPPInfo					pp_affected;
 	void					UpdateDeffered();
@@ -117,6 +129,23 @@ public:
 	CEffectorCam*			GetCamEffector			(ECamEffectorType		type);
 	void					RemoveCamEffector		(ECamEffectorType		type);
 
+	IC Fmatrix&				unaffected_View		()	{ return unaffected_mView;		}
+	IC Fvector&				unaffected_Pos		()	{ return unaffected_vPosition;	}
+	IC Fvector&				unaffected_Dir		()	{ return unaffected_vDirection;	}
+	IC Fvector&				unaffected_Up		()	{ return unaffected_vNormal;	}
+	IC Fvector&				unaffected_Right	()	{ return unaffected_vRight;		}
+	IC void					unaffected_Matrix	(Fmatrix& M)	
+	{	M.set(unaffected_vRight,unaffected_vNormal,unaffected_vDirection,unaffected_vPosition);	}
+
+	IC Fvector&				affected_Pos		()	{ return affected_vPosition;	}
+	IC Fvector&				affected_Dir		()	{ return affected_vDirection;	}
+	IC Fvector&				affected_Up			()	{ return affected_vNormal;		}
+	IC Fvector&				affected_Right		()	{ return affected_vRight;		}
+	IC void					affected_Matrix		(Fmatrix& M)
+	{			
+		M.set(affected_vRight,affected_vNormal,affected_vDirection,affected_vPosition);	
+	}
+
 	CEffectorPP*			GetPPEffector			(EEffectorPPType	type);
 	CEffectorPP*			AddPPEffector			(CEffectorPP*		ef);
 	void					RemovePPEffector		(EEffectorPPType	type);
@@ -126,7 +155,6 @@ public:
 	IC Fvector				Up					()	const { return vNormal;	}
 	IC Fvector				Right				()	const { return vRight;	}
 	
-	IC void					camera_Matrix		(Fmatrix& M){M.set(vRight,vNormal,vDirection,vPosition);}
 	void					Update				(const Fvector& P, const Fvector& D, const Fvector& N, float fFOV_Dest, float fASPECT_Dest, float fFAR_Dest, u32 flags=0);
 	void					Update				(const CCameraBase* C);
 	void					ApplyDevice			(float _viewport_near);
