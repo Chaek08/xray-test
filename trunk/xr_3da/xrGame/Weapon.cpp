@@ -423,6 +423,22 @@ void CWeapon::Load		(LPCSTR section)
 	}
 }
 
+void CWeapon::LoadFireParams		(LPCSTR section, LPCSTR prefix)
+{
+	camDispersion		= pSettings->r_float		(section,"cam_dispersion"	); 
+	camDispersion		= deg2rad					(camDispersion);
+
+	if (pSettings->line_exist(section,"cam_dispersion_inc"))
+	{
+		camDispersionInc		= pSettings->r_float		(section,"cam_dispersion_inc"	); 
+		camDispersionInc		= deg2rad					(camDispersionInc);
+	}
+	else
+		camDispersionInc = 0;
+
+	CShootingObject::LoadFireParams(section, prefix);
+};
+
 void CWeapon::LoadZoomOffset (LPCSTR section, LPCSTR prefix)
 {
 	string256 full_name;
@@ -641,6 +657,8 @@ void CWeapon::shedule_Update	(u32 dT)
 
 void CWeapon::OnH_B_Independent	(bool just_before_destroy)
 {
+	RemoveShotEffector			();
+
 	inherited::OnH_B_Independent(just_before_destroy);
 
 	if (m_pHUD)
@@ -656,7 +674,6 @@ void CWeapon::OnH_B_Independent	(bool just_before_destroy)
 	m_bZoomMode					= false;
 	UpdateXForm					();
 
-	RemoveShotEffector			();
 }
 
 void CWeapon::OnH_A_Independent	()

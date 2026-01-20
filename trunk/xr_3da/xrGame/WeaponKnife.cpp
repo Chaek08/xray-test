@@ -71,7 +71,22 @@ void CWeaponKnife::OnStateSwitch	(u32 S)
 		{
 			//-------------------------------------------
 			m_eHitType		= m_eHitType_1;
-			fHitPower		= fHitPower_1;
+			//fHitPower		= fHitPower_1;
+			if (ParentIsActor())
+			{
+				if (GameID() == GAME_SINGLE)
+				{
+					fCurrentHit		= fvHitPower_1[g_SingleGameDifficulty];
+				}
+				else
+				{
+					fCurrentHit		= fvHitPower_1[egdMaster];
+				}
+			}
+			else
+			{
+				fCurrentHit		= fvHitPower_1[egdMaster];
+			}
 			fHitImpulse		= fHitImpulse_1;
 			//-------------------------------------------
 			switch2_Attacking	(S);
@@ -254,7 +269,8 @@ void CWeaponKnife::LoadFireParams(LPCSTR section, LPCSTR prefix)
 	string256			full_name;
 	string32			buffer;
 	shared_str			s_sHitPower_2;
-	fHitPower_1		= fHitPower;
+	//fHitPower_1		= fHitPower;
+	fvHitPower_1		= fvHitPower;
 	fHitImpulse_1		= fHitImpulse;
 	m_eHitType_1		= ALife::g_tfString2HitType(pSettings->r_string(section, "hit_type"));
 

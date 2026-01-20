@@ -59,7 +59,8 @@ protected:
 	bool					bWorking;
 
 	float					fTimeToFire;
-	float					fHitPower;
+	Fvector4				fvHitPower;
+	//float					fHitPower;
 	float					fHitImpulse;
 
 	//скорость вылета пули из ствола
